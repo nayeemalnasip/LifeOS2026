@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeOS 2026 — Ultimate Productivity</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+:root{
+  --bg:#0f172a; --panel:#1e293b; --border:#334155;
+  --red:#ef4444; --green:#22c55e; --blue:#38bdf8; --purple:#a78bfa;
+  --text:#e5e7eb; --muted:#94a3b8; --glass:rgba(30,41,59,0.35);
+  --gold:#facc15;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:Inter;color:var(--text);background:linear-gradient(135deg,#0f172a,#1e293b);}
+header{position:sticky;top:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:1000;}
+.header{max-width:1200px;margin:auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.logo{font-weight:800;letter-spacing:.5px;color:var(--blue);}
+nav{display:flex;gap:6px;flex-wrap:wrap;}
+nav button{background:var(--glass);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;transition:all .3s;font-weight:500;}
+nav button:hover{transform:translateY(-2px) scale(1.02);background:#334155;box-shadow:0 6px 20px rgba(0,0,0,0.4);}
+nav button.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:#020617;box-shadow:0 8px 24px rgba(0,0,0,0.6);}
+main{max-width:1200px;margin:auto;padding:18px;}
+.panel{background:var(--glass);border:1px solid var(--border);border-radius:22px;padding:16px;margin-bottom:16px;box-shadow:0 12px 36px rgba(0,0,0,.5);transition:all .3s;backdrop-filter:blur(12px);}
+.panel:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 48px rgba(0,0,0,.6);}
+.grid{display:grid;gap:16px;}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.stat{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.muted{color:var(--muted);}
+input,textarea,select{width:100%;background:rgba(15,23,42,0.85);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:12px;margin-top:8px;outline:none;}
+input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 12px var(--blue,0.5);}
+button.primary{margin-top:12px;background:linear-gradient(135deg,var(--blue),var(--purple));border:none;color:#020617;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;transition:all .3s;}
+button.primary:hover{transform:translateY(-2px) scale(1.02);filter:brightness(1.15);box-shadow:0 8px 20px rgba(56,189,248,0.6),0 0 10px rgba(167,139,250,0.5);}
+li{margin-top:10px;background:var(--glass);border:1px solid var(--border);padding:10px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s;}
+li:hover{border-color:var(--blue);box-shadow:0 6px 18px rgba(0,0,0,0.3);}
+.done{text-decoration:line-through;color:var(--muted);}
+progress{width:100%;height:12px;border-radius:999px;}
+.alert{color:var(--red);font-weight:700;text-align:center;}
+section{display:none;transition:all .3s;}
+section.active{display:block;}
+.badge{display:inline-block;background:var(--gold);color:#020617;padding:4px 10px;border-radius:12px;font-weight:700;margin-left:8px;box-shadow:0 0 8px rgba(255,204,21,0.6);}
+.typing{border-right:2px solid var(--blue);white-space:nowrap;overflow:hidden;display:inline-block;}
+@keyframes blink{0%,100%{border-color:transparent;}50%{border-color:var(--blue);}}
+@keyframes typing{from{width:0;}to{width:100%;}}
+.typing span{display:inline-block;animation:typing 3s steps(40) 1 forwards, blink .7s infinite;}
+@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}.stat{font-size:24px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header">
+    <div class="logo">🔥 LifeOS 2026
+      <div style="font-size:12px;color:#94a3b8;font-weight:500">Discipline • Focus • Progress</div>
+    </div>
+    <nav>
+      <button data-section="dashboard">Dashboard</button>
+      <button data-section="focus">Focus</button>
+      <button data-section="tasks">Tasks</button>
+      <button data-section="progress">Progress</button>
+      <button data-section="review">Review</button>
+      <button data-section="goals">Goals</button>
+      <button data-section="about">About</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="panel" style="text-align:center">
+  <h1 style="margin:0;font-size:34px;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Become Best Version of Yourself — 2026</h1>
+  <p class="muted" style="margin-top:8px">No motivation. Only system. Only progress.</p>
+</div>
+
+<!-- Dashboard -->
+<section id="dashboard" class="active">
+  <div class="grid grid-3">
+    <div class="panel"><div class="stat" id="streak">0</div><div class="muted">Streak <span id="streakBadge"></span></div></div>
+    <div class="panel"><div class="stat" id="doneCount">0</div><div class="muted">Tasks Done Today</div></div>
+    <div class="panel"><div class="stat" id="status">LOCKED</div><div class="muted">Status</div></div>
+  </div>
+  <div class="panel">
+    <h3>Today's Completion</h3>
+    <canvas id="completionRadial" style="max-width:200px;margin:auto"></canvas>
+    <p id="completionText" class="muted" style="text-align:center;margin-top:4px">0%</p>
+  </div>
+</section>
+
+<!-- Focus -->
+<section id="focus">
+  <div class="panel">
+    <h2>Set Your Focus + Timer</h2>
+    <input id="focusInput" placeholder="Today's ONE focus" />
+    <input id="focusTimeInput" type="number" placeholder="Focus time in minutes" />
+    <button class="primary" onclick="setFocus()">Lock Focus</button>
+    <p id="focusShow" class="muted"></p>
+    <p id="focusTimer" class="muted"></p>
+    <progress id="focusProgress" value="0" max="100"></progress>
+  </div>
+</section>
+
+<!-- Tasks -->
+<section id="tasks">
+  <div class="panel">
+    <h2>Daily Tasks (Max 5)</h2>
+    <input id="taskInput" placeholder="Task" />
+    <select id="priorityInput">
+      <option value="low">Low Priority</option>
+      <option value="medium" selected>Medium Priority</option>
+      <option value="high">High Priority</option>
+    </select>
+    <button class="primary" onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
+</section>
+
+<!-- Review -->
+<section id="review">
+  <div class="panel">
+    <h2>End Day Review</h2>
+    <textarea id="reviewInput" rows="4" placeholder="What happened today?"></textarea>
+    <button class="primary" onclick="endDay()">End Day</button>
+    <div id="reviewList" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<!-- Goals -->
+<section id="goals">
+  <div class="panel">
+    <h2>Goals & Income Tracker</h2>
+    <input id="goalInput" placeholder="Enter your goal" />
+    <input id="incomeInput" placeholder="Monthly income" />
+    <button class="primary" onclick="addGoal()">Add Goal</button>
+    <ul id="goalList"></ul>
+    <button class="primary" onclick="exportCSV()">Export CSV</button>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="panel">
+    <h2 class="typing"><span>Why this system was built</span></h2>
+    <p class="typing" style="margin-top:8px"><span>To enforce discipline, track progress, and build your best version in 2026. Everything is designed to make you accountable daily.</span></p>
+    <p class="typing" style="margin-top:8px"><span>Focus, tasks, streaks, charts, and monthly income tracking ensure maximum productivity and clarity.</span></p>
+    <p class="typing" style="margin-top:12px;font-size:12px;color:var(--muted)"><span>Developed by Nayeem AL Nasip</span></p>
+  </div>
+</section>
+
+<script>
+// --- Navigation ---
+const sections=document.querySelectorAll('section');
+const navBtns=document.querySelectorAll('nav button');
+navBtns.forEach(btn=>btn.addEventListener('click',()=>{
+  sections.forEach(s=>s.classList.remove('active'));
+  document.getElementById(btn.dataset.section).classList.add('active');
+  navBtns.forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}));
+sections[0].classList.add('active'); navBtns[0].classList.add('active');
+
+// --- Core Variables ---
+let focus=localStorage.getItem('focus')||'';
+let tasks=JSON.parse(localStorage.getItem('tasks'))||[];
+let streak=Number(localStorage.getItem('streak'))||0;
+let history=JSON.parse(localStorage.getItem('history'))||[];
+let lastDay=localStorage.getItem('lastDay')||'';
+let goals=JSON.parse(localStorage.getItem('goals'))||[];
+const today=new Date().toDateString();
+if(lastDay!==today){tasks=[];localStorage.setItem('tasks','[]');}
+
+// --- Badge ---
+function updateBadge(){
+  let badge='';
+  if(streak>=30)badge='🏆';
+  else if(streak>=14)badge='🥇';
+  else if(streak>=7)badge='🥈';
+  document.getElementById('streakBadge').innerText=badge;
+}
+
+// --- Radial Completion ---
+let radialChart=null;
+function updateRadial(){
+  const done=tasks.filter(t=>t.d).length;
+  const percent=Math.round((done/tasks.length||0)*100);
+  document.getElementById('completionText').innerText=percent+'%';
+  if(radialChart)radialChart.destroy();
+  const ctx=document.getElementById('completionRadial').getContext('2d');
+  radialChart=new Chart(ctx,{
+    type:'doughnut',
+    data:{labels:['Completed','Remaining'],datasets:[{data:[percent,100-percent],backgroundColor:['#22c55e','#334155'],borderWidth:0}]},
+    options:{cutout:'75%',plugins:{legend:{display:false}},animation:{duration:800}}
+  });
+}
+
+// --- Focus Timer ---
+let timerInterval=null;
+function setFocus(){
+  const minutes=Number(document.getElementById('focusTimeInput').value)||25;
+  const fInput=document.getElementById('focusInput');
+  if(!fInput.value.trim()){alert('Enter focus'); return;}
+  focus=fInput.value;
+  localStorage.setItem('focus',focus);
+  document.getElementById('focusShow').innerText='🔥 FOCUS: '+focus;
+  updateStatus();
+  startTimer(minutes*60);
+}
+function startTimer(seconds){
+  clearInterval(timerInterval);
+  let time=seconds;
+  const timerDisplay=document.getElementById('focusTimer');
+  const progressBar=document.getElementById('focusProgress');
+  function update(){const m=Math.floor(time/60); const s=time%60; timerDisplay.innerText=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`; progressBar.value=100*(seconds-time)/seconds;}
+  update();
+  timerInterval=setInterval(()=>{time--;update(); if(time<=0){clearInterval(timerInterval);timerDisplay.innerText='Focus Completed!';progressBar.value=100; confetti({particleCount:100,spread:160});}},1000);
+}
+
+// --- Tasks ---
+function addTask(){
+  if(!focus){alert('Set focus first');return;}
+  if(tasks.length>=5){alert('Max 5 tasks');return;}
+  const tInput=document.getElementById('taskInput');
+  const pInput=document.getElementById('priorityInput');
+  tasks.push({t:tInput.value,d:false,p:pInput.value});
+  tInput.value=''; renderTasks();
+}
+function renderTasks(){
+  const tList=document.getElementById('taskList');
+  tList.innerHTML='';
+  tasks.forEach((o,i)=>{
+    const color=o.p==='high'? '#ef4444':o.p==='medium'? '#facc15':'#22c55e';
+    tList.innerHTML+=`<li style="border-left:4px solid ${color};padding-left:10px">
+      <span class="${o.d?'done':''}">${o.t}</span>
+      <div>
+        <button onclick="tasks[${i}].d=!tasks[${i}].d; renderTasks(); updateStatus();">✔</button>
+        <button onclick="tasks.splice(${i},1); renderTasks(); updateStatus();">✖</button>
+      </div>
+    </li>`;
+  });
+  localStorage.setItem('tasks',JSON.stringify(tasks));
+  updateStatus(); updateRadial();
+}
+
+// --- Status ---
+function updateStatus(){
+  const done=tasks.filter(t=>t.d).length;
+  document.getElementById('doneCount').innerText=done;
+  document.getElementById('status').innerText=(focus&&done>0)?'ACTIVE':'LOCKED';
+  updateBadge();
+}
+
+// --- End Day ---
+function endDay(){
+  const done=tasks.filter(t=>t.d).length;
+  const success=focus&&done>0;
+  if(success){streak++; confetti({particleCount:150,spread:160});}
+  else{streak=0; alert('⚠ FAILED → penalty tomorrow.');}
+  history.push({date:today,success,tasks:tasks.map(t=>({task:t.t,done:t.d,priority:t.p})),review:document.getElementById('reviewInput').value});
+  if(history.length>30)history.shift(); // Keep 30 days
+  localStorage.setItem('history',JSON.stringify(history));
+  localStorage.setItem('streak',streak);
+  localStorage.setItem('lastDay',today);
+  localStorage.removeItem('focus'); localStorage.removeItem('tasks');
+  focus=''; tasks=[]; renderTasks(); updateStatus(); updateRadial();
+  renderReviews();
+  document.getElementById('reviewInput').value='';
+}
+
+// --- Review ---
+function renderReviews(){
+  const rList=document.getElementById('reviewList');
+  rList.innerHTML='';
+  history.slice(-7).forEach(h=>{
+    rList.innerHTML+=`<div style="margin-top:6px;padding:6px;background:#334155;border-radius:10px;">
+      <strong>${h.date}</strong>: ${h.review||'No review'} (${h.success?'✅ Success':'❌ Fail'})
+    </div>`;
+  });
+}
+
+// --- Goals ---
+function addGoal(){
+  const gInput=document.getElementById('goalInput');
+  const iInput=document.getElementById('incomeInput');
+  goals.push({goal:gInput.value,income:iInput.value});
+  gInput.value=''; iInput.value=''; renderGoals();
+}
+function renderGoals(){
+  const gList=document.getElementById('goalList');
+  gList.innerHTML='';
+  goals.forEach((g,i)=>gList.innerHTML+=`<li>${g.goal} — ${g.income} <button onclick="goals.splice(${i},1); renderGoals();">✖</button></li>`);
+  localStorage.setItem('goals',JSON.stringify(goals));
+}
+
+// --- CSV Export ---
+function exportCSV(){
+  let csv='Date,Focus,Task,Done,Priority,Review\n';
+  history.forEach(h=>{
+    h.tasks.forEach(t=>{
+      csv+=`${h.date},"${focus || ''}","${t.task}",${t.done},${t.priority},"${h.review || ''}"\n`;
+    });
+  });
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='LifeOS2026.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// --- Initial Render ---
+renderTasks(); updateStatus(); updateRadial(); updateBadge(); renderGoals(); renderReviews();
+if(focus)document.getElementById('focusShow').innerText='🔥 FOCUS: '+focus;
+</script>
+
+</body>
+</html>
