@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LifeOS 2026 — Ultimate Productivity</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<style>
-:root{
-  --bg:#0f172a; --panel:#1e293b; --border:#334155;
-  --red:#ef4444; --green:#22c55e; --blue:#38bdf8; --purple:#a78bfa;
-  --text:#e5e7eb; --muted:#94a3b8; --glass:rgba(30,41,59,0.35);
-  --gold:#facc15;
-}
-*{box-sizing:border-box;}
-body{margin:0;font-family:Inter;color:var(--text);background:linear-gradient(135deg,#0f172a,#1e293b);}
-header{position:sticky;top:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:1000;}
-.header{max-width:1200px;margin:auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
-.logo{font-weight:800;letter-spacing:.5px;color:var(--blue);}
-nav{display:flex;gap:6px;flex-wrap:wrap;}
-nav button{background:var(--glass);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;transition:all .3s;font-weight:500;}
-nav button:hover{transform:translateY(-2px) scale(1.02);background:#334155;box-shadow:0 6px 20px rgba(0,0,0,0.4);}
-nav button.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:#020617;box-shadow:0 8px 24px rgba(0,0,0,0.6);}
-main{max-width:1200px;margin:auto;padding:18px;}
-.panel{background:var(--glass);border:1px solid var(--border);border-radius:22px;padding:16px;margin-bottom:16px;box-shadow:0 12px 36px rgba(0,0,0,.5);transition:all .3s;backdrop-filter:blur(12px);}
-.panel:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 48px rgba(0,0,0,.6);}
-.grid{display:grid;gap:16px;}
-.grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
-.grid-3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
-.stat{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.muted{color:var(--muted);}
-input,textarea,select{width:100%;background:rgba(15,23,42,0.85);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:12px;margin-top:8px;outline:none;}
-input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 12px var(--blue,0.5);}
-button.primary{margin-top:12px;background:linear-gradient(135deg,var(--blue),var(--purple));border:none;color:#020617;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;transition:all .3s;}
-button.primary:hover{transform:translateY(-2px) scale(1.02);filter:brightness(1.15);box-shadow:0 8px 20px rgba(56,189,248,0.6),0 0 10px rgba(167,139,250,0.5);}
-li{margin-top:10px;background:var(--glass);border:1px solid var(--border);padding:10px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s;}
-li:hover{border-color:var(--blue);box-shadow:0 6px 18px rgba(0,0,0,0.3);}
-.done{text-decoration:line-through;color:var(--muted);}
-progress{width:100%;height:12px;border-radius:999px;}
-.alert{color:var(--red);font-weight:700;text-align:center;}
-section{display:none;transition:all .3s;}
-section.active{display:block;}
-.badge{display:inline-block;background:var(--gold);color:#020617;padding:4px 10px;border-radius:12px;font-weight:700;margin-left:8px;box-shadow:0 0 8px rgba(255,204,21,0.6);}
-.typing{border-right:2px solid var(--blue);white-space:nowrap;overflow:hidden;display:inline-block;}
-@keyframes blink{0%,100%{border-color:transparent;}50%{border-color:var(--blue);}}
-@keyframes typing{from{width:0;}to{width:100%;}}
-.typing span{display:inline-block;animation:typing 3s steps(40) 1 forwards, blink .7s infinite;}
-@media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}.stat{font-size:24px}}
-</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#38bdf8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeOS 2026 — Ultimate Productivity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root{
+      --bg:#0f172a; --panel:#1e293b; --border:#334155;
+      --red:#ef4444; --green:#22c55e; --blue:#38bdf8; --purple:#a78bfa;
+      --text:#e5e7eb; --muted:#94a3b8; --glass:rgba(30,41,59,0.35);
+      --gold:#facc15;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:Inter;color:var(--text);background:linear-gradient(135deg,#0f172a,#1e293b);}
+    header{position:sticky;top:0;background:rgba(15,23,42,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:1000;}
+    .header{max-width:1200px;margin:auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+    .logo{font-weight:800;letter-spacing:.5px;color:var(--blue);}
+    nav{display:flex;gap:6px;flex-wrap:wrap;}
+    nav button{background:var(--glass);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;transition:all .3s;font-weight:500;}
+    nav button:hover{transform:translateY(-2px) scale(1.02);background:#334155;box-shadow:0 6px 20px rgba(0,0,0,0.4);}
+    nav button.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:#020617;box-shadow:0 8px 24px rgba(0,0,0,0.6);}
+    main{max-width:1200px;margin:auto;padding:18px;}
+    .panel{background:var(--glass);border:1px solid var(--border);border-radius:22px;padding:16px;margin-bottom:16px;box-shadow:0 12px 36px rgba(0,0,0,.5);transition:all .3s;backdrop-filter:blur(12px);}
+    .panel:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 48px rgba(0,0,0,.6);}
+    .grid{display:grid;gap:16px;}
+    .grid-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+    .grid-3{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+    .stat{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .muted{color:var(--muted);}
+    input,textarea,select{width:100%;background:rgba(15,23,42,0.85);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:12px;margin-top:8px;outline:none;}
+    input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 12px var(--blue,0.5);}
+    button.primary{margin-top:12px;background:linear-gradient(135deg,var(--blue),var(--purple));border:none;color:#020617;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;transition:all .3s;}
+    button.primary:hover{transform:translateY(-2px) scale(1.02);filter:brightness(1.15);box-shadow:0 8px 20px rgba(56,189,248,0.6),0 0 10px rgba(167,139,250,0.5);}
+    li{margin-top:10px;background:var(--glass);border:1px solid var(--border);padding:10px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s;}
+    li:hover{border-color:var(--blue);box-shadow:0 6px 18px rgba(0,0,0,0.3);}
+    .done{text-decoration:line-through;color:var(--muted);}
+    progress{width:100%;height:12px;border-radius:999px;}
+    .alert{color:var(--red);font-weight:700;text-align:center;}
+    section{display:none;transition:all .3s;}
+    section.active{display:block;}
+    .badge{display:inline-block;background:var(--gold);color:#020617;padding:4px 10px;border-radius:12px;font-weight:700;margin-left:8px;box-shadow:0 0 8px rgba(255,204,21,0.6);}
+    .typing{border-right:2px solid var(--blue);white-space:nowrap;overflow:hidden;display:inline-block;}
+    @keyframes blink{0%,100%{border-color:transparent;}50%{border-color:var(--blue);}}
+    @keyframes typing{from{width:0;}to{width:100%;}}
+    .typing span{display:inline-block;animation:typing 3s steps(40) 1 forwards, blink .7s infinite;}
+    @media(max-width:768px){.grid-2,.grid-3{grid-template-columns:1fr}.stat{font-size:24px}}
+  </style>
 </head>
 <body>
 
@@ -258,7 +260,7 @@ function endDay(){
   if(success){streak++; confetti({particleCount:150,spread:160});}
   else{streak=0; alert('⚠ FAILED → penalty tomorrow.');}
   history.push({date:today,success,tasks:tasks.map(t=>({task:t.t,done:t.d,priority:t.p})),review:document.getElementById('reviewInput').value});
-  if(history.length>30)history.shift(); // Keep 30 days
+  if(history.length>30)history.shift();
   localStorage.setItem('history',JSON.stringify(history));
   localStorage.setItem('streak',streak);
   localStorage.setItem('lastDay',today);
@@ -311,6 +313,13 @@ function exportCSV(){
 // --- Initial Render ---
 renderTasks(); updateStatus(); updateRadial(); updateBadge(); renderGoals(); renderReviews();
 if(focus)document.getElementById('focusShow').innerText='🔥 FOCUS: '+focus;
+
+// --- PWA: Service Worker Registration ---
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('✅ Service Worker Registered'))
+    .catch(err => console.log('❌ SW Registration Failed:', err));
+}
 </script>
 
 </body>
